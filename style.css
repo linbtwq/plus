@@ -8,7 +8,6 @@
     --border-light: rgba(255, 255, 255, 0.1);
 }
 
-/* 1. БАЗОВЫЕ НАСТРОЙКИ (ФИКС: Никакого схлопывания) */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body { 
@@ -33,7 +32,7 @@ body::before {
 }
 @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-/* 2. КОНТЕЙНЕРЫ (ФИКС: Жесткая ширина) */
+/* КОНТЕЙНЕРЫ */
 .wrapper { 
     width: 100%; 
     max-width: 1200px; 
@@ -44,81 +43,68 @@ body::before {
     z-index: 10;
 }
 
-.center-screen { 
-    flex: 1; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    width: 100%; 
-}
+.center-screen { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
 
-/* 3. НАВИГАЦИЯ (ФИКС: Больше не столбик в углу) */
+/* ШАПКА (ФИКС: Ровная строка навигации) */
 .header-nav { 
     display: flex !important; 
     flex-direction: row !important;
-    justify-content: space-between; 
+    justify-content: space-between !important; 
     align-items: center; 
     width: 100%; 
     margin-bottom: 40px; 
 }
 .btn-back { color: #fff !important; text-decoration: none; font-family: 'Unbounded'; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
 
-/* 4. ПАНЕЛИ (ФИКС: Адекватные размеры на всех страницах) */
+/* ПАНЕЛИ (ФИКС: Ширина и отступы) */
 .glass-panel { 
     background: var(--panel-bg); 
     backdrop-filter: blur(30px); 
     border: 1px solid var(--border-light); 
     border-radius: 20px; 
-    padding: 35px; 
+    padding: 40px; 
     width: 100%; 
     box-shadow: 0 25px 50px rgba(0,0,0,0.8);
 }
 
-/* Главная страница (image_583ce9.png) */
+/* Главная страница */
 .auth-card { 
     max-width: 420px; 
     text-align: center; 
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 25px;
 }
+.user-info { display: flex; flex-direction: column; align-items: center; gap: 15px; width: 100%; }
+.avatar-img { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--border-light); }
 
-/* 5. ЛЕНТА ФИЛЬМОВ (ФИКС: Ровная сетка и спрятанные статы) */
+/* ЛЕНТА ФИЛЬМОВ */
 .movies-grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-    gap: 30px; 
+    gap: 35px; 
     width: 100%; 
 }
-
-.movie-card { 
-    background: #0a0a0a; border-radius: 18px; overflow: hidden; 
-    border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column;
-}
-
+.movie-card { background: #0a0a0a; border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
 .poster-container { position: relative; width: 100%; height: 420px; overflow: hidden; }
 .card-poster { width: 100%; height: 100%; object-fit: cover; }
-.poster-overlay { 
-    position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; 
-    background: linear-gradient(to bottom, transparent, #0a0a0a); 
-}
-
+.poster-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(to bottom, transparent, #0a0a0a); }
 .card-content { padding: 25px; margin-top: -50px; position: relative; z-index: 5; text-align: center; }
-.movie-title { font-family: 'Unbounded'; font-size: 1.1rem; margin-bottom: 8px; color: #fff; }
 .movie-score { font-family: 'Unbounded'; font-size: 4rem; font-weight: 900; line-height: 1; margin: 10px 0; }
 
-/* ТУЛТИПЫ (ФИКС: Железно скрыты до наведения) */
+/* ТУЛТИПЫ */
 .movie-score-wrapper { position: relative; display: inline-block; cursor: help; }
 .stats-tooltip { 
-    position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(10px); 
-    background: rgba(0,0,0,0.95); border: 1px solid #fff; padding: 15px; width: 220px; 
-    border-radius: 12px; opacity: 0; visibility: hidden; transition: 0.3s; z-index: 100;
+    position: absolute; bottom: 105%; left: 50%; transform: translateX(-50%) translateY(10px); 
+    background: rgba(0,0,0,0.98); border: 1px solid #fff; padding: 18px; width: 230px; 
+    border-radius: 14px; opacity: 0; visibility: hidden; transition: 0.3s; z-index: 100;
 }
 .movie-score-wrapper:hover .stats-tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-.stat-row { display: flex; justify-content: space-between; font-size: 0.75rem; color: #888; margin-bottom: 6px; }
+.stat-row { display: flex; justify-content: space-between; font-size: 0.75rem; color: #999; margin-bottom: 7px; }
 .stat-val { color: #fff; font-family: 'Unbounded'; }
 
-/* 6. СТРАНИЦА ОЦЕНКИ (ФИКС: 2 колонки и предпросмотр) */
+/* СТРАНИЦА ОЦЕНКИ */
 .dashboard-grid { 
     display: grid; 
     grid-template-columns: 1fr 1fr; 
@@ -126,23 +112,12 @@ body::before {
     width: 100%; 
     margin-top: 30px; 
 }
-
-.section-box { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 15px; border: 1px solid var(--border-light); }
-
-.movie-preview { 
-    display: flex; align-items: center; gap: 20px; background: rgba(255,255,255,0.03); 
-    padding: 15px; border-radius: 12px; margin-bottom: 25px; width: 100%;
-}
-.movie-preview.hidden { display: none !important; }
-.preview-poster { width: 70px; height: 100px; object-fit: cover; border-radius: 8px; }
-
-/* ИНПУТЫ И ПОЛЗУНКИ */
+.section-box { background: rgba(255,255,255,0.03); padding: 25px; border-radius: 15px; border: 1px solid var(--border-light); }
 .title-input { 
-    width: 100%; padding: 18px; background: rgba(0,0,0,0.5); 
+    width: 100%; padding: 20px; background: rgba(0,0,0,0.6); 
     border: 1px solid var(--border-light); color: #fff; 
-    border-radius: 12px; font-family: 'Unbounded'; text-align: center; outline: none;
+    border-radius: 12px; font-family: 'Unbounded'; text-align: center; outline: none; margin-bottom: 20px;
 }
-
 input[type="range"] { width: 100%; height: 5px; background: rgba(255,255,255,0.1); -webkit-appearance: none; outline: none; margin: 15px 0; }
 input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: #fff; border-radius: 50%; cursor: pointer; }
 
@@ -152,8 +127,9 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18p
     border: none; border-radius: 12px; font-family: 'Unbounded'; font-weight: 900; 
     text-transform: uppercase; cursor: pointer; text-decoration: none; display: block; text-align: center;
 }
+.btn-secondary { background: transparent; color: #fff !important; border: 1px solid var(--border-light); margin-top: 10px; width: 100%; padding: 15px; border-radius: 10px; font-family: 'Unbounded'; font-size: 0.75rem; cursor: pointer; text-decoration: none; display: block; text-align: center; }
 
-/* 7. МОБИЛЬНАЯ АДАПТАЦИЯ (ФИКС: Компактность) */
+/* МОБИЛКИ */
 @media (max-width: 768px) {
     .dashboard-grid { grid-template-columns: 1fr !important; }
     .movies-grid { grid-template-columns: 1fr !important; justify-items: center; }
@@ -161,6 +137,5 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18p
     .header-nav { flex-direction: row; justify-content: space-between; }
 }
 
-/* МОДАЛКА */
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 9999; }
-.modal-overlay.hidden { display: none; }
+.modal-overlay.hidden { display: none !important; }
