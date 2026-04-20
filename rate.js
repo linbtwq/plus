@@ -23,7 +23,6 @@ const titleInput = document.getElementById('movie-title');
 const suggestionsBox = document.getElementById('suggestions');
 const scoreDisplay = document.getElementById('final-score');
 
-// Элементы предпросмотра
 const previewBox = document.getElementById('movie-preview');
 const previewPoster = document.getElementById('preview-poster');
 const previewTitle = document.getElementById('preview-title');
@@ -62,14 +61,12 @@ function showSuggestions(movies) {
             titleInput.value = title;
             selectedPoster = m.poster_path ? `https://image.tmdb.org/t/p/w500${m.poster_path}` : '';
             
-            // Жанры
             if (m.genre_ids && m.genre_ids.length > 0) {
                 selectedGenres = m.genre_ids.map(id => GENRE_MAP[id]).filter(Boolean).slice(0, 2).join(', ');
             } else {
                 selectedGenres = '';
             }
             
-            // включаем предпросмотр и прячем поиск
             previewPoster.src = m.poster_path ? `https://image.tmdb.org/t/p/w200${m.poster_path}` : 'https://via.placeholder.com/60x90?text=No+Img';
             previewTitle.textContent = title;
             previewGenres.textContent = selectedGenres || 'Жанр не указан';
