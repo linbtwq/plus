@@ -199,68 +199,72 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 }
 .clear-btn:hover { background: #ff3333; color: #fff; border-color: #ff3333; box-shadow: 0 0 10px rgba(255,51,51,0.5); }
 
-
-
-
-
 @media (max-width: 768px) {
-    :root {
-        font-size: 15px; 
-    }
-    .center-screen {
-        padding-top: 5vh; 
-    }
+    :root { font-size: 14px; }
+
+
+    .wrapper { padding: 10px; width: 100%; }
+    .center-screen { padding-top: 20px; align-items: center; }
+
+
     .center-screen .glass-panel {
-        max-width: 320px; 
-        padding: 25px 20px !important;
+        width: 90% !important;
+        max-width: 340px;
+        padding: 25px !important;
     }
 
-    .score-display {
-        font-size: 3.5rem !important;
-    }
+  
     .movies-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 12px;
-        padding: 5px;
+        grid-template-columns: 1fr !important; 
+        gap: 20px;
+        padding: 0 10px;
+    }
+
+    .movie-card {
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
     }
 
     .poster-container {
-        height: 220px !important;
+        height: 250px !important; 
     }
-    .movie-title {
-        font-size: 0.85rem !important;
-        min-height: 2.4em; 
-    }
-    .movie-score {
-        font-size: 2.2rem !important; 
-    }
+
+    .movie-title { font-size: 1.1rem !important; }
+    .movie-score { font-size: 2.8rem !important; }
+
     .dashboard-grid {
         grid-template-columns: 1fr !important; 
-        gap: 10px;
+        display: flex !important;
+        flex-direction: column;
+        gap: 15px;
     }
-    .wrapper {
-        padding: 10px;
+
+    .section-box {
+        width: 100%;
+        padding: 15px !important;
     }
-    .glass-panel {
-        width: 100% !important;
-        padding: 20px 15px !important;
+
+    .range-group label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        margin-bottom: 10px;
     }
-    .range-group {
-        margin-bottom: 15px;
-    }
-    label {
+
+    .val-display { font-size: 0.9rem; }
+
+    .btn-primary {
+        padding: 16px !important;
         font-size: 0.9rem !important;
+        margin-top: 10px;
+        width: 100%;
     }
-    input[type="range"] {
-        height: 6px;
-    }
-    .btn-primary, .btn-secondary {
-        padding: 18px !important;
-        font-size: 0.9rem !important;
-    }
+
     .movie-preview {
-        flex-direction: row;
-        gap: 10px;
-        padding: 10px !important;
+        padding: 12px !important;
+        gap: 12px;
     }
+    .preview-poster { width: 50px !important; height: 75px !important; }
+    .preview-title { font-size: 1rem !important; }
 }
