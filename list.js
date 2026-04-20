@@ -3,6 +3,18 @@ import { auth, db, collection, getDocs, query, orderBy, onAuthStateChanged, dele
 let currentUser = null;
 let loadedMovies = [];
 
+const modal = document.getElementById('custom-modal');
+const confirmBtn = document.getElementById('modal-confirm');
+const cancelBtn = document.getElementById('modal-cancel');
+
+function askConfirmation() {
+    return new Promise((resolve) => {
+        modal.classList.remove('hidden');
+        confirmBtn.onclick = () => { modal.classList.add('hidden'); resolve(true); };
+        cancelBtn.onclick = () => { modal.classList.add('hidden'); resolve(false); };
+    });
+}
+
 onAuthStateChanged(auth, (user) => { 
     if (user) { currentUser = user; fetchMovies(); } 
     else { window.location.href = 'index.html'; }
@@ -114,9 +126,18 @@ function render(moviesToRender) {
 }
 
 window.removeMovie = async (id) => {
-    if (confirm('Точно удалить эту оценку?')) {
-        await deleteDoc(doc(db, "movies", id));
-        fetchMovies();
+    const confirmed = await askConfirmation(); 
+    
+    if (confirmed) {
+        try {
+            await deleteDoc(doc(db, "movies", id));
+            loadedMovies = loadedMovies.filter(m => m.id !== id);
+            updateStats(loadedMovies);
+            render(loadedMovies);
+        } catch (e) {
+            console.error("Ошибка удаления:", e);
+            alert("Ошибка при удалении");
+        }
     }
 };
 
