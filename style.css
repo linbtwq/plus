@@ -203,46 +203,64 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 
 
 
-/* мобила */
 @media (max-width: 768px) {
-   
-    .center-screen {
-        align-items: flex-start; 
-        padding-top: 15vh;     
+    :root {
+        font-size: 18px; 
     }
 
+
     .wrapper {
-        padding: 15px;      
+        width: 100%;
+        padding: 10px;
     }
 
     .glass-panel {
-        width: 100%;          
-        padding: 20px 15px;    
-        margin: 0 auto;
+        width: 100% !important;
+        padding: 40px 20px !important;
+        border-radius: 20px;
     }
 
-   
-    .score-display {
-        font-size: 3.5rem;
+    .movies-grid {
+        grid-template-columns: 1fr !important; 
+        gap: 25px;
     }
 
-    .card-avatar {
-        width: 40px !important;
-        height: 40px !important;
+    .movie-card {
+        width: 100%;
+        min-height: 500px;
     }
 
-   
-    body::after {
-        content: '';
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.05) 0%, transparent 70%);
-        z-index: -1;
-        pointer-events: none;
+    .poster-container {
+        height: 400px !important; 
     }
-}  
-    .movie-preview { gap: 12px; padding: 12px; }
-    .preview-poster { width: 50px; height: 75px; } 
-    .preview-title { font-size: 0.9rem; padding-right: 20px; }
-    .clear-btn { width: 24px; height: 24px; top: 12px; right: 12px; font-size: 0.6rem; }
+    .movie-title {
+        font-size: 1.6rem !important;
+        margin-top: 15px;
+    }
+
+    .movie-genres {
+        font-size: 0.8rem !important;
+    }
+
+    .movie-score {
+        font-size: 4.5rem !important;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 22px !important;
+        font-size: 1.1rem !important;
+        border-radius: 15px;
+        margin-bottom: 10px;
+    }
+
+    .movie-preview {
+        padding: 20px !important;
+    }
+    .preview-poster {
+        width: 80px !important;
+        height: 120px !important;
+    }
+    .preview-title {
+        font-size: 1.2rem !important;
+    }
 }
