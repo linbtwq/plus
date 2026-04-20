@@ -23,7 +23,7 @@ body {
     overflow-x: hidden;
 }
 
-/* ЖИВОЙ Ч/Б ФОН */
+
 body::before {
     content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     background: linear-gradient(135deg, #000000, #111111, #080808);
@@ -39,11 +39,11 @@ body::before {
 .blob.dark { width: 60vw; height: 60vw; background: #555555; bottom: -10%; right: -10%; animation: float 20s infinite alternate-reverse ease-in-out; }
 @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(8%, 8%); } }
 
-/* КОНТЕЙНЕРЫ (Сделали шире обертку, чтобы влезало больше компактных карточек) */
+
 .center-screen { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
 .wrapper { width: 100%; max-width: 1200px; padding: 30px 20px; z-index: 10; display: flex; flex-direction: column; }
 
-/* ШАПКА: КОМПАКТНАЯ */
+
 .header-nav { 
     display: flex; justify-content: space-between; align-items: center; 
     width: 100%; margin-bottom: 25px; /* Уменьшили отступ */
@@ -56,7 +56,7 @@ body::before {
 }
 .btn-back:hover { text-shadow: 0 0 10px var(--accent-glow); opacity: 0.7; }
 
-/* СЕЛЕКТ СПРАВА */
+
 .custom-dropdown { position: relative; width: 200px; z-index: 50; margin: 0; }
 .dropdown-selected { background: rgba(0,0,0,0.6); color: #fff; border: 1px solid var(--border-light); padding: 10px 15px; border-radius: 8px; cursor: pointer; font-family: 'Unbounded'; font-size: 0.7rem; text-align: center; transition: 0.3s; }
 .dropdown-selected:hover { border-color: var(--accent); box-shadow: 0 0 10px rgba(255,255,255,0.1);}
@@ -67,7 +67,7 @@ body::before {
 
 .glass-panel { background: var(--panel-bg); backdrop-filter: blur(25px); border: 1px solid var(--border-light); border-top: 1px solid rgba(255, 255, 255, 0.3); border-radius: 16px; padding: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.8); }
 
-/* ПОИСК И ФОРМЫ */
+
 .search-wrapper { position: relative; width: 100%; margin-bottom: 25px; }
 .title-input { width: 100%; padding: 15px; background: rgba(0,0,0,0.6); border: 1px solid var(--border-light); color: #fff; font-size: 1rem; font-family: 'Unbounded'; text-align: center; border-radius: 10px; outline: none; transition: 0.3s; }
 .title-input:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
@@ -88,7 +88,7 @@ input[type="range"] { width: 100%; height: 3px; background: rgba(255,255,255,0.1
 input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: #fff; border-radius: 50%; cursor: pointer; box-shadow: 0 0 8px rgba(255,255,255,0.5); transition: 0.2s; }
 input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 
-/* --- 5 ЦВЕТОВ --- */
+
 .score-display { font-family: 'Unbounded'; font-size: 4.5rem; line-height: 1; text-align: center; margin: 10px 0; font-weight: 900; }
 .color-red { color: #ff3333 !important; text-shadow: 0 0 20px rgba(255, 51, 51, 0.4); }
 .color-orange { color: #ff9900 !important; text-shadow: 0 0 20px rgba(255, 153, 0, 0.4); }
@@ -96,17 +96,17 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 .color-lime { color: #bbff00 !important; text-shadow: 0 0 20px rgba(187, 255, 0, 0.4); }
 .color-green { color: #00ff44 !important; text-shadow: 0 0 20px rgba(0, 255, 68, 0.4); }
 
-/* КНОПКИ */
+
 .btn-primary, .btn-secondary { width: 100%; padding: 15px; border-radius: 10px; font-family: 'Unbounded'; font-weight: 900; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; transition: 0.3s; display: block; text-align: center; border: none; letter-spacing: 1px; }
 .btn-primary { background: #fff; color: #000 !important; }
 .btn-secondary { background: transparent; color: var(--accent) !important; border: 1px solid var(--border-light); }
 .btn-primary:hover { background: #ddd; transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255,255,255,0.2); }
 .btn-secondary:hover { background: rgba(255,255,255,0.05); border-color: var(--accent); }
 
-/* --- КИНЕМАТОГРАФИЧНЫЕ КАРТОЧКИ (АДАПТИВНЫЕ И КОМПАКТНЫЕ) --- */
+
 .movies-grid { 
     display: grid; 
-    /* Вот эта строчка магия: карточки будут сжиматься до 210px, влезая в любой монитор */
+    
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); 
     gap: 20px; 
     width: 100%; 
@@ -119,7 +119,7 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 }
 .movie-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.2); box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 20px var(--accent-glow); }
 
-/* КОМПАКТНЫЙ ПОСТЕР */
+
 .poster-container { position: relative; width: 100%; height: 280px; } /* Значительно уменьшили высоту постера */
 .card-poster { width: 100%; height: 100%; object-fit: cover; }
 .card-poster.no-img { display: flex; align-items: center; justify-content: center; background: #111; color: #333; font-family: 'Unbounded'; font-size: 0.7rem; }
@@ -129,9 +129,9 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
     pointer-events: none;
 }
 
-/* КОНТЕНТ ПОДНИМАЕТСЯ НА ГРАДИЕНТ */
+
 .card-content { 
-    padding: 0 15px 20px 15px; /* Уменьшили внутренние отступы */
+    padding: 0 15px 20px 15px;
     margin-top: -30px; 
     display: flex; flex-direction: column; align-items: center; text-align: center; 
     position: relative; z-index: 2;
@@ -152,7 +152,7 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 .stat-row { display: flex; justify-content: space-between; font-size: 0.65rem; color: #888; margin-bottom: 6px; }
 .stat-val { color: #fff; font-family: 'Unbounded'; }
 
-/* КРЕСТИК УДАЛЕНИЯ */
+
 .delete-btn { 
     position: absolute; top: 10px; right: 10px; 
     background: rgba(0,0,0,0.5); backdrop-filter: blur(5px);
@@ -165,7 +165,7 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 .delete-btn:hover { background: #ff3333; border-color: #ff3333; transform: scale(1.1); box-shadow: 0 0 10px rgba(255, 51, 51, 0.5); }
 
 
-/* --- ПРЕДПРОСМОТР ФИЛЬМА (ЖИВОЙ ПОСТЕР) --- */
+
 .movie-preview {
     display: flex; align-items: center; gap: 20px;
     background: rgba(0,0,0,0.4); border: 1px solid var(--border-light);
@@ -204,14 +204,43 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 
 
 /* мобила */
-@media (max-width: 768px) { 
-    .dashboard-grid { grid-template-columns: 1fr; } 
-    .movies-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); } 
-    .card-poster { height: 220px; }
-    .movie-score { font-size: 2.5rem; }
-    .header-nav { flex-direction: column; gap: 15px; align-items: flex-start; }
-    
-    
+@media (max-width: 768px) {
+   
+    .center-screen {
+        align-items: flex-start; 
+        padding-top: 15vh;     
+    }
+
+    .wrapper {
+        padding: 15px;      
+    }
+
+    .glass-panel {
+        width: 100%;          
+        padding: 20px 15px;    
+        margin: 0 auto;
+    }
+
+   
+    .score-display {
+        font-size: 3.5rem;
+    }
+
+    .card-avatar {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+   
+    body::after {
+        content: '';
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.05) 0%, transparent 70%);
+        z-index: -1;
+        pointer-events: none;
+    }
+}  
     .movie-preview { gap: 12px; padding: 12px; }
     .preview-poster { width: 50px; height: 75px; } 
     .preview-title { font-size: 0.9rem; padding-right: 20px; }
