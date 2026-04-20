@@ -23,7 +23,7 @@ body {
     overflow-x: hidden;
 }
 
-
+/* ФОНОВАЯ АНИМАЦИЯ */
 body::before {
     content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     background: linear-gradient(135deg, #000000, #111111, #080808);
@@ -39,77 +39,72 @@ body::before {
 .blob.dark { width: 60vw; height: 60vw; background: #555555; bottom: -10%; right: -10%; animation: float 20s infinite alternate-reverse ease-in-out; }
 @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(8%, 8%); } }
 
-.wrapper { width: 100%; max-width: 1200px; padding: 30px 20px; z-index: 10; display: flex; flex-direction: column; align-items: center; }
+/* КОНТЕЙНЕРЫ */
 .center-screen { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
+.wrapper { width: 100%; max-width: 1200px; padding: 30px 20px; z-index: 10; display: flex; flex-direction: column; align-items: center; }
 
+/* ПАНЕЛИ */
+.glass-panel { background: var(--panel-bg); backdrop-filter: blur(25px); border: 1px solid var(--border-light); border-top: 1px solid rgba(255, 255, 255, 0.3); border-radius: 16px; padding: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.8); }
 
-.glass-panel { background: var(--panel-bg); backdrop-filter: blur(25px); border: 1px solid var(--border-light); border-top: 1px solid rgba(255, 255, 255, 0.3); border-radius: 16px; padding: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.8); width: 100%; }
-
+/* ШАПКА И НАВИГАЦИЯ */
 .header-nav { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 25px; }
 .btn-back { color: var(--accent) !important; text-decoration: none; font-family: 'Unbounded'; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
 
-
-.custom-dropdown { position: relative; width: 200px; }
-.dropdown-selected { background: rgba(0,0,0,0.6); color: #fff; border: 1px solid var(--border-light); padding: 10px 15px; border-radius: 8px; cursor: pointer; font-family: 'Unbounded'; font-size: 0.7rem; text-align: center; }
-.dropdown-options { position: absolute; top: 100%; left: 0; width: 100%; background: #0a0a0a; border: 1px solid var(--border-light); border-radius: 8px; display: none; margin-top: 5px; z-index: 100; }
-.custom-dropdown.open .dropdown-options { display: block; }
-.dropdown-item { padding: 10px; cursor: pointer; font-size: 0.7rem; }
-.dropdown-item:hover { background: rgba(255, 255, 255, 0.1); }
-
-
+/* ЛЕНТА ФИЛЬМОВ */
 .movies-grid { 
     display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
-    gap: 30px; 
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); 
+    gap: 25px; 
     width: 100%; 
 }
 
 .movie-card { 
     background: #0a0a0a; border-radius: 14px; overflow: hidden; 
     border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; 
-    position: relative; display: flex; flex-direction: column; 
+    position: relative; display: flex; flex-direction: column;
 }
-.movie-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.2); }
+.movie-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.2); box-shadow: 0 0 20px var(--accent-glow); }
 
-.poster-container { position: relative; width: 100%; height: 350px; overflow: hidden; }
+.poster-container { position: relative; width: 100%; height: 320px; overflow: hidden; }
 .card-poster { width: 100%; height: 100%; object-fit: cover; }
 .poster-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(to bottom, transparent 0%, #0a0a0a 100%); }
 
-.card-content { padding: 0 15px 20px 15px; margin-top: -40px; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; }
-.movie-title { font-family: 'Unbounded'; font-size: 1rem; margin-bottom: 5px; text-transform: uppercase; }
-.movie-genres { font-size: 0.65rem; color: #777; text-transform: uppercase; margin-bottom: 10px; }
+.card-content { padding: 0 15px 20px 15px; margin-top: -35px; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; }
+.movie-title { font-family: 'Unbounded'; font-size: 0.95rem; margin-bottom: 5px; text-transform: uppercase; }
+.movie-score { font-family: 'Unbounded'; font-size: 3.2rem; line-height: 1; font-weight: 900; margin: 5px 0; }
 
+/* ОЦЕНКА И ПОЛЗУНКИ */
+.dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; margin-bottom: 15px; }
+.section-box { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 10px; border: 1px solid var(--border-light); }
+.range-group { margin-bottom: 12px; }
+label { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.75rem; color: #aaa; }
+input[type="range"] { width: 100%; height: 3px; background: rgba(255,255,255,0.1); -webkit-appearance: none; outline: none; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: #fff; border-radius: 50%; cursor: pointer; }
 
-.movie-score-wrapper { position: relative; cursor: help; }
-.movie-score { font-family: 'Unbounded'; font-size: 3.5rem; line-height: 1; font-weight: 900; margin: 5px 0; }
-.stats-tooltip { 
-    position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%) translateY(10px); 
-    background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); border-radius: 12px; 
-    width: 180px; border: 1px solid var(--border-light); opacity: 0; visibility: hidden; 
-    transition: 0.3s; z-index: 100; padding: 15px; 
-}
-.movie-score-wrapper:hover .stats-tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-.stat-row { display: flex; justify-content: space-between; font-size: 0.65rem; color: #888; margin-bottom: 6px; }
-.stat-val { color: #fff; font-family: 'Unbounded'; }
-
-
-.dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-bottom: 20px; }
-.section-box { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; border: 1px solid var(--border-light); }
-.range-group { margin-bottom: 15px; }
-input[type="range"] { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 4px; -webkit-appearance: none; outline: none; }
-input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: #fff; border-radius: 50%; cursor: pointer; }
-
-
+/* МОБИЛЬНЫЙ БЛОК (ТОТ САМЫЙ ФИКС) */
 @media (max-width: 768px) {
     :root { font-size: 13px; }
-    .movies-grid { grid-template-columns: 1fr !important; justify-items: center; }
+    .wrapper { padding: 10px; }
+    
+    /* Лента: Центрируем узкие вертикальные карточки */
+    .movies-grid { grid-template-columns: 1fr !important; justify-items: center; gap: 25px; }
     .movie-card { width: 260px !important; }
     .poster-container { height: 380px !important; }
+    
+    /* Оценка: блоки один под другим */
     .dashboard-grid { grid-template-columns: 1fr !important; }
+    .header-nav { flex-direction: row; justify-content: space-between; }
 }
 
 
-.modal-overlay { position: fixed !important; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); backdrop-filter: blur(15px); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+.modal-overlay { 
+    position: fixed !important; top: 0; left: 0; width: 100vw; height: 100vh; 
+    background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); 
+    display: flex; align-items: center; justify-content: center; z-index: 9999; 
+}
 .modal-overlay.hidden { display: none; }
+.modal-box { width: 90%; max-width: 320px; padding: 30px !important; text-align: center; }
 
-.btn-primary { background: #fff; color: #000 !important; font-weight: 900; padding: 15px; border-radius: 10px; border: none; cursor: pointer; text-transform: uppercase; font-family: 'Unbounded'; }
+
+.btn-primary { background: #fff; color: #000 !important; font-family: 'Unbounded'; font-weight: 900; padding: 15px; border: none; border-radius: 10px; cursor: pointer; }
+.btn-secondary { background: transparent; color: #fff !important; border: 1px solid var(--border-light); padding: 15px; border-radius: 10px; cursor: pointer; text-decoration: none; }
