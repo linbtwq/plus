@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"><title>Оценить фильм</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-blobs">
+        <div class="blob ruby"></div>
+        <div class="blob dark"></div>
+    </div>
+
+    <div class="wrapper">
+        <div class="header-nav"><a href="index.html" class="btn-back">← НАЗАД</a></div>
+
+        <div class="glass-panel">
+            <div class="search-wrapper" id="search-wrapper">
+                <input type="text" id="movie-title" class="title-input" placeholder="НАЗВАНИЕ ФИЛЬМА..." autocomplete="off">
+                <div id="suggestions" class="suggestions-list"></div>
+            </div>
+            
+            <div id="movie-preview" class="movie-preview hidden">
+                <img id="preview-poster" src="" alt="Постер" class="preview-poster">
+                <div class="preview-info">
+                    <div id="preview-title" class="preview-title">Название</div>
+                    <div id="preview-genres" class="preview-genres">Жанры</div>
+                </div>
+                <button id="clear-preview" class="clear-btn" title="Выбрать другой фильм">✕</button>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="section-box">
+                    <div class="range-group"><label>Сценарий <span id="val-script" class="val-display">7</span></label><input type="range" id="script" min="1" max="10" value="7"></div>
+                    <div class="range-group"><label>Актеры <span id="val-actors" class="val-display">7</span></label><input type="range" id="actors" min="1" max="10" value="7"></div>
+                    <div class="range-group"><label>Режиссура <span id="val-directing" class="val-display">7</span></label><input type="range" id="directing" min="1" max="10" value="7"></div>
+                    <div class="range-group"><label>Персонажи <span id="val-chars" class="val-display">7</span></label><input type="range" id="chars" min="1" max="10" value="7"></div>
+                    <div class="range-group"><label>Идея <span id="val-idea" class="val-display">7</span></label><input type="range" id="idea" min="1" max="10" value="7"></div>
+                </div>
+                
+                <div class="section-box">
+                    <div class="range-group"><label>Атмосфера <span id="val-atmosphere" class="val-display">4</span></label><input type="range" id="atmosphere" min="1" max="5" value="4"></div>
+                    <div class="range-group"><label>Впечатление <span id="val-impression" class="val-display">4</span></label><input type="range" id="impression" min="1" max="5" value="4"></div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <div class="section-title">ИТОГ</div>
+                        <div id="final-score" class="score-display">71</div>
+                        <button id="save-btn" class="btn-primary">СОХРАНИТЬ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="rate.js"></script>
+</body>
+</html>
