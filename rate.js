@@ -141,7 +141,7 @@ document.getElementById('save-btn').onclick = async () => {
             timestamp: serverTimestamp(),
             date: new Date().toLocaleDateString('ru-RU'),
             stats: {
-                script: adocument.getElementById('script').value,
+                script: document.getElementById('script').value,
                 actors: document.getElementById('actors').value,
                 directing: document.getElementById('directing').value,
                 chars: document.getElementById('chars').value,
