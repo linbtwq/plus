@@ -126,7 +126,12 @@ function render(moviesToRender) {
 }
 
 window.removeMovie = async (id) => {
-    const confirmed = await askConfirmation(); 
+    let confirmed = false;
+    if (window.innerWidth <= 768) {
+        confirmed = confirm('Точно удалить эту оценку?');
+    } else {
+        confirmed = await askConfirmation();
+    }
     
     if (confirmed) {
         try {
