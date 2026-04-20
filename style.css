@@ -103,6 +103,33 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 .btn-primary:hover { background: #ddd; transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255,255,255,0.2); }
 .btn-secondary:hover { background: rgba(255,255,255,0.05); border-color: var(--accent); }
 
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000;
+    opacity: 1; transition: opacity 0.3s ease;
+}
+
+.modal-overlay.hidden {
+    display: none; opacity: 0;
+}
+
+.modal-box {
+    width: 90%; max-width: 350px;
+    text-align: center;
+    padding: 30px !important;
+}
+
+.modal-actions {
+    display: flex; gap: 10px; margin-top: 20px;
+}
+
+.modal-actions button {
+    flex: 1; padding: 12px !important; font-size: 0.8rem !important;
+}
 
 .movies-grid { 
     display: grid; 
