@@ -205,62 +205,62 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 
 @media (max-width: 768px) {
     :root {
-        font-size: 18px; 
+        font-size: 15px; 
+    }
+    .center-screen {
+        padding-top: 5vh; 
+    }
+    .center-screen .glass-panel {
+        max-width: 320px; 
+        padding: 25px 20px !important;
     }
 
-
-    .wrapper {
-        width: 100%;
-        padding: 10px;
+    .score-display {
+        font-size: 3.5rem !important;
     }
-
-    .glass-panel {
-        width: 100% !important;
-        padding: 40px 20px !important;
-        border-radius: 20px;
-    }
-
     .movies-grid {
-        grid-template-columns: 1fr !important; 
-        gap: 25px;
-    }
-
-    .movie-card {
-        width: 100%;
-        min-height: 500px;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px;
+        padding: 5px;
     }
 
     .poster-container {
-        height: 400px !important; 
+        height: 220px !important;
     }
     .movie-title {
-        font-size: 1.6rem !important;
-        margin-top: 15px;
+        font-size: 0.85rem !important;
+        min-height: 2.4em; 
     }
-
-    .movie-genres {
-        font-size: 0.8rem !important;
-    }
-
     .movie-score {
-        font-size: 4.5rem !important;
+        font-size: 2.2rem !important; 
     }
-
+    .dashboard-grid {
+        grid-template-columns: 1fr !important; 
+        gap: 10px;
+    }
+    .wrapper {
+        padding: 10px;
+    }
+    .glass-panel {
+        width: 100% !important;
+        padding: 20px 15px !important;
+    }
+    .range-group {
+        margin-bottom: 15px;
+    }
+    label {
+        font-size: 0.9rem !important;
+    }
+    input[type="range"] {
+        height: 6px;
+    }
     .btn-primary, .btn-secondary {
-        padding: 22px !important;
-        font-size: 1.1rem !important;
-        border-radius: 15px;
-        margin-bottom: 10px;
+        padding: 18px !important;
+        font-size: 0.9rem !important;
     }
-
     .movie-preview {
-        padding: 20px !important;
-    }
-    .preview-poster {
-        width: 80px !important;
-        height: 120px !important;
-    }
-    .preview-title {
-        font-size: 1.2rem !important;
+        flex-direction: row;
+        gap: 10px;
+        padding: 10px !important;
     }
 }
