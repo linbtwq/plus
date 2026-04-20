@@ -2,13 +2,14 @@
 
 :root {
     --accent: #ffffff;
-    --accent-glow: rgba(255, 255, 255, 0.25);
+    --accent-glow: rgba(255, 255, 255, 0.2);
     --bg-dark: #050505;
-    --panel-bg: rgba(12, 12, 12, 0.85);
-    --border-light: rgba(255, 255, 255, 0.1);
+    --panel-bg: rgba(12, 12, 12, 0.9);
+    --border-light: rgba(255, 255, 255, 0.08);
 }
 
-* { box-sizing: border-box; }
+/* 1. БАЗА (ФИКС: Больше ничего не улетает за край) */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
 body { 
     font-family: 'Montserrat', sans-serif; 
@@ -18,127 +19,138 @@ body {
     min-height: 100vh; 
     display: flex;
     flex-direction: column;
-    align-items: center;
-    position: relative;
+    align-items: center; /* Горизонтальное центрирование */
     overflow-x: hidden;
 }
 
 /* ФОН */
 body::before {
     content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: linear-gradient(135deg, #000000, #111111, #080808);
+    background: linear-gradient(135deg, #000, #111, #080808);
     background-size: 400% 400%;
     animation: gradientMove 15s ease infinite;
     z-index: -2;
 }
 @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-/* КОНТЕЙНЕРЫ (ФИКС: Больше не сжимаются в полоску) */
+/* 2. КОНТЕЙНЕРЫ (ФИКС: Больше не сжимаются в полоску) */
 .wrapper { 
     width: 100%; 
     max-width: 1200px; 
     padding: 40px 20px; 
-    z-index: 10; 
     display: flex; 
     flex-direction: column; 
-    align-items: center; 
+    align-items: center; /* Центрируем детей внутри */
 }
 
-.center-screen { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
-
-/* ГРИД ЛЕНТЫ (ФИКС: Ровная сетка карточек) */
-.movies-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
-    gap: 30px; 
+.center-screen { 
+    flex: 1; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
     width: 100%; 
 }
 
-/* КАРТОЧКА ФИЛЬМА */
-.movie-card { 
-    background: #0a0a0a; 
-    border-radius: 16px; 
-    overflow: hidden; 
-    border: 1px solid rgba(255,255,255,0.05); 
-    transition: 0.3s ease; 
-    position: relative; 
+/* 3. ШАПКА (ФИКС: Навигация стоит ровно) */
+.header-nav { 
     display: flex; 
-    flex-direction: column;
+    justify-content: space-between; 
+    align-items: center; 
+    width: 100%; 
+    max-width: 1100px; /* Чтобы не прилипало к краям на ПК */
+    margin-bottom: 40px; 
 }
-.movie-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+.btn-back { color: #fff !important; text-decoration: none; font-family: 'Unbounded'; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
 
-.poster-container { position: relative; width: 100%; height: 380px; overflow: hidden; }
-.card-poster { width: 100%; height: 100%; object-fit: cover; }
-.poster-overlay { 
-    position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; 
-    background: linear-gradient(to bottom, transparent, #0a0a0a); 
-}
-
-.card-content { padding: 20px; margin-top: -40px; position: relative; z-index: 5; text-align: center; }
-
-/* ТУЛТИПЫ (ФИКС: Жестко скрыты до наведения, не растягивают карточку) */
-.movie-score-wrapper { position: relative; display: inline-block; }
-.movie-score { font-family: 'Unbounded'; font-size: 3.5rem; font-weight: 900; margin: 10px 0; line-height: 1; }
-
-.stats-tooltip { 
-    position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(10px); 
-    background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); border: 1px solid #fff; 
-    padding: 15px; width: 200px; border-radius: 12px; 
-    opacity: 0; visibility: hidden; z-index: 100; transition: 0.3s; pointer-events: none;
-}
-.movie-score-wrapper:hover .stats-tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-.stat-row { display: flex; justify-content: space-between; font-size: 0.7rem; color: #888; margin-bottom: 5px; }
-.stat-val { color: #fff; font-family: 'Unbounded'; }
-
-/* СТРАНИЦА ОЦЕНКИ (ФИКС: Снова 2 колонки и нормальная ширина) */
+/* 4. ПАНЕЛИ (ФИКС: Главное меню и Оценка) */
 .glass-panel { 
     background: var(--panel-bg); 
     backdrop-filter: blur(25px); 
     border: 1px solid var(--border-light); 
-    border-radius: 16px; 
-    padding: 30px; 
+    border-radius: 20px; 
+    padding: 40px; 
     width: 100%; 
-    max-width: 850px; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
 }
 
+/* ФИКС: Главная карточка входа */
+.main-menu { max-width: 450px; text-align: center; }
+
+/* ФИКС: Сетка на странице оценки (Dashboard) */
 .dashboard-grid { 
     display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 20px; 
+    grid-template-columns: 1fr 1fr; /* Две колонки на ПК */
+    gap: 25px; 
     width: 100%; 
-    margin-top: 25px; 
+    margin-top: 30px; 
 }
-.section-box { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; border: 1px solid var(--border-light); }
 
-/* ИНПУТЫ И ПОЛЗУНКИ */
+/* 5. ЛЕНТА ФИЛЬМОВ (ФИКС: Ровные вертикальные постеры) */
+.movies-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 35px; 
+    width: 100%; 
+}
+
+.movie-card { 
+    background: #0a0a0a; 
+    border-radius: 18px; 
+    overflow: hidden; 
+    border: 1px solid rgba(255,255,255,0.05); 
+    display: flex; 
+    flex-direction: column;
+    width: 100%;
+}
+
+.poster-container { position: relative; width: 100%; height: 420px; overflow: hidden; }
+.card-poster { width: 100%; height: 100%; object-fit: cover; }
+.poster-overlay { 
+    position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; 
+    background: linear-gradient(to bottom, transparent, #0a0a0a); 
+}
+
+.card-content { padding: 25px; margin-top: -50px; position: relative; z-index: 5; text-align: center; }
+.movie-title { font-family: 'Unbounded'; font-size: 1.1rem; margin-bottom: 8px; }
+.movie-score { font-family: 'Unbounded'; font-size: 4rem; font-weight: 900; line-height: 1; margin: 10px 0; }
+
+/* ТУЛТИПЫ */
+.movie-score-wrapper { position: relative; display: inline-block; }
+.stats-tooltip { 
+    position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(10px); 
+    background: rgba(0,0,0,0.95); border: 1px solid #fff; padding: 15px; width: 220px; 
+    border-radius: 12px; opacity: 0; visibility: hidden; transition: 0.3s; z-index: 100;
+}
+.movie-score-wrapper:hover .stats-tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+
+/* 6. ИНПУТЫ И КНОПКИ */
 .title-input { 
-    width: 100%; padding: 15px; background: rgba(0,0,0,0.5); 
+    width: 100%; padding: 18px; background: rgba(255,255,255,0.03); 
     border: 1px solid var(--border-light); color: #fff; 
-    border-radius: 10px; font-family: 'Unbounded'; text-align: center; 
+    border-radius: 12px; font-family: 'Unbounded'; text-align: center; outline: none;
 }
-
-input[type="range"] { width: 100%; height: 4px; background: rgba(255,255,255,0.1); -webkit-appearance: none; outline: none; }
-input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: #fff; border-radius: 50%; cursor: pointer; }
-
-/* КНОПКИ */
 .btn-primary { 
-    width: 100%; padding: 18px; background: #fff; color: #000; 
-    border: none; border-radius: 10px; font-family: 'Unbounded'; 
-    font-weight: 900; cursor: pointer; margin-top: 20px; 
+    width: 100%; padding: 20px; background: #fff; color: #000; 
+    border: none; border-radius: 12px; font-family: 'Unbounded'; 
+    font-weight: 900; cursor: pointer; text-decoration: none; display: block;
 }
 
-/* МОБИЛЬНАЯ АДАПТАЦИЯ (ФИКС: Всё в одну колонку, карточки по центру) */
+/* 7. МОБИЛЬНАЯ АДАПТАЦИЯ (ФИКС: Всё встает в один ряд) */
 @media (max-width: 768px) {
+    .wrapper { padding: 20px 15px; }
+    .glass-panel { padding: 25px; }
+    
     .dashboard-grid { grid-template-columns: 1fr !important; }
-    .movies-grid { grid-template-columns: 1fr !important; justify-items: center; }
-    .movie-card { width: 280px; }
+    
+    .movies-grid { 
+        grid-template-columns: 1fr !important; 
+        justify-items: center; 
+    }
+    .movie-card { max-width: 320px; } /* Ограничиваем ширину на мобиле */
+    
     .header-nav { flex-direction: row; justify-content: space-between; }
 }
 
-/* МОДАЛКА УДАЛЕНИЯ */
-.modal-overlay { 
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-    background: rgba(0,0,0,0.9); z-index: 9999; 
-    display: flex; align-items: center; justify-content: center; 
-}
+/* МОДАЛКА */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 9999; }
 .modal-overlay.hidden { display: none; }
