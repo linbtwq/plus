@@ -23,88 +23,122 @@ body {
     overflow-x: hidden;
 }
 
-/* ФОНОВАЯ АНИМАЦИЯ */
+/* ФОН */
 body::before {
     content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     background: linear-gradient(135deg, #000000, #111111, #080808);
     background-size: 400% 400%;
     animation: gradientMove 15s ease infinite;
-    z-index: -2; pointer-events: none;
+    z-index: -2;
 }
 @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-.bg-blobs { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
-.blob { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.15; }
-.blob.ruby { width: 50vw; height: 50vw; background: #ffffff; top: -10%; left: -10%; animation: float 15s infinite alternate ease-in-out; }
-.blob.dark { width: 60vw; height: 60vw; background: #555555; bottom: -10%; right: -10%; animation: float 20s infinite alternate-reverse ease-in-out; }
-@keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(8%, 8%); } }
+/* КОНТЕЙНЕРЫ (ФИКС: Больше не сжимаются в полоску) */
+.wrapper { 
+    width: 100%; 
+    max-width: 1200px; 
+    padding: 40px 20px; 
+    z-index: 10; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+}
 
-/* КОНТЕЙНЕРЫ */
 .center-screen { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
-.wrapper { width: 100%; max-width: 1200px; padding: 30px 20px; z-index: 10; display: flex; flex-direction: column; align-items: center; }
 
-/* ПАНЕЛИ */
-.glass-panel { background: var(--panel-bg); backdrop-filter: blur(25px); border: 1px solid var(--border-light); border-top: 1px solid rgba(255, 255, 255, 0.3); border-radius: 16px; padding: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.8); }
-
-/* ШАПКА И НАВИГАЦИЯ */
-.header-nav { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 25px; }
-.btn-back { color: var(--accent) !important; text-decoration: none; font-family: 'Unbounded'; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
-
-/* ЛЕНТА ФИЛЬМОВ */
+/* ГРИД ЛЕНТЫ (ФИКС: Ровная сетка карточек) */
 .movies-grid { 
     display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); 
-    gap: 25px; 
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+    gap: 30px; 
     width: 100%; 
 }
 
+/* КАРТОЧКА ФИЛЬМА */
 .movie-card { 
-    background: #0a0a0a; border-radius: 14px; overflow: hidden; 
-    border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; 
-    position: relative; display: flex; flex-direction: column;
+    background: #0a0a0a; 
+    border-radius: 16px; 
+    overflow: hidden; 
+    border: 1px solid rgba(255,255,255,0.05); 
+    transition: 0.3s ease; 
+    position: relative; 
+    display: flex; 
+    flex-direction: column;
 }
-.movie-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.2); box-shadow: 0 0 20px var(--accent-glow); }
+.movie-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
 
-.poster-container { position: relative; width: 100%; height: 320px; overflow: hidden; }
+.poster-container { position: relative; width: 100%; height: 380px; overflow: hidden; }
 .card-poster { width: 100%; height: 100%; object-fit: cover; }
-.poster-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(to bottom, transparent 0%, #0a0a0a 100%); }
+.poster-overlay { 
+    position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; 
+    background: linear-gradient(to bottom, transparent, #0a0a0a); 
+}
 
-.card-content { padding: 0 15px 20px 15px; margin-top: -35px; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; }
-.movie-title { font-family: 'Unbounded'; font-size: 0.95rem; margin-bottom: 5px; text-transform: uppercase; }
-.movie-score { font-family: 'Unbounded'; font-size: 3.2rem; line-height: 1; font-weight: 900; margin: 5px 0; }
+.card-content { padding: 20px; margin-top: -40px; position: relative; z-index: 5; text-align: center; }
 
-/* ОЦЕНКА И ПОЛЗУНКИ */
-.dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; margin-bottom: 15px; }
-.section-box { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 10px; border: 1px solid var(--border-light); }
-.range-group { margin-bottom: 12px; }
-label { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.75rem; color: #aaa; }
-input[type="range"] { width: 100%; height: 3px; background: rgba(255,255,255,0.1); -webkit-appearance: none; outline: none; }
-input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: #fff; border-radius: 50%; cursor: pointer; }
+/* ТУЛТИПЫ (ФИКС: Жестко скрыты до наведения, не растягивают карточку) */
+.movie-score-wrapper { position: relative; display: inline-block; }
+.movie-score { font-family: 'Unbounded'; font-size: 3.5rem; font-weight: 900; margin: 10px 0; line-height: 1; }
 
-/* МОБИЛЬНЫЙ БЛОК (ТОТ САМЫЙ ФИКС) */
+.stats-tooltip { 
+    position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(10px); 
+    background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); border: 1px solid #fff; 
+    padding: 15px; width: 200px; border-radius: 12px; 
+    opacity: 0; visibility: hidden; z-index: 100; transition: 0.3s; pointer-events: none;
+}
+.movie-score-wrapper:hover .stats-tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+.stat-row { display: flex; justify-content: space-between; font-size: 0.7rem; color: #888; margin-bottom: 5px; }
+.stat-val { color: #fff; font-family: 'Unbounded'; }
+
+/* СТРАНИЦА ОЦЕНКИ (ФИКС: Снова 2 колонки и нормальная ширина) */
+.glass-panel { 
+    background: var(--panel-bg); 
+    backdrop-filter: blur(25px); 
+    border: 1px solid var(--border-light); 
+    border-radius: 16px; 
+    padding: 30px; 
+    width: 100%; 
+    max-width: 850px; 
+}
+
+.dashboard-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
+    width: 100%; 
+    margin-top: 25px; 
+}
+.section-box { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; border: 1px solid var(--border-light); }
+
+/* ИНПУТЫ И ПОЛЗУНКИ */
+.title-input { 
+    width: 100%; padding: 15px; background: rgba(0,0,0,0.5); 
+    border: 1px solid var(--border-light); color: #fff; 
+    border-radius: 10px; font-family: 'Unbounded'; text-align: center; 
+}
+
+input[type="range"] { width: 100%; height: 4px; background: rgba(255,255,255,0.1); -webkit-appearance: none; outline: none; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: #fff; border-radius: 50%; cursor: pointer; }
+
+/* КНОПКИ */
+.btn-primary { 
+    width: 100%; padding: 18px; background: #fff; color: #000; 
+    border: none; border-radius: 10px; font-family: 'Unbounded'; 
+    font-weight: 900; cursor: pointer; margin-top: 20px; 
+}
+
+/* МОБИЛЬНАЯ АДАПТАЦИЯ (ФИКС: Всё в одну колонку, карточки по центру) */
 @media (max-width: 768px) {
-    :root { font-size: 13px; }
-    .wrapper { padding: 10px; }
-    
-    /* Лента: Центрируем узкие вертикальные карточки */
-    .movies-grid { grid-template-columns: 1fr !important; justify-items: center; gap: 25px; }
-    .movie-card { width: 260px !important; }
-    .poster-container { height: 380px !important; }
-    
-    /* Оценка: блоки один под другим */
     .dashboard-grid { grid-template-columns: 1fr !important; }
+    .movies-grid { grid-template-columns: 1fr !important; justify-items: center; }
+    .movie-card { width: 280px; }
     .header-nav { flex-direction: row; justify-content: space-between; }
 }
 
-
+/* МОДАЛКА УДАЛЕНИЯ */
 .modal-overlay { 
-    position: fixed !important; top: 0; left: 0; width: 100vw; height: 100vh; 
-    background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px); 
-    display: flex; align-items: center; justify-content: center; z-index: 9999; 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.9); z-index: 9999; 
+    display: flex; align-items: center; justify-content: center; 
 }
 .modal-overlay.hidden { display: none; }
-.modal-box { width: 90%; max-width: 320px; padding: 30px !important; text-align: center; }
-
-
-.btn-primary { background: #fff; color: #000 !important; font-family: 'Unbounded'; font-weight: 900; padding: 15px; border: none; border-radius: 10px; cursor: pointer; }
-.btn-secondary { background: transparent; color: #fff !important; border: 1px solid var(--border-light); padding: 15px; border-radius: 10px; cursor: pointer; text-decoration: none; }
