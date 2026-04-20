@@ -38,5 +38,14 @@
             document.body.style.setProperty('--mouse-y', (e.clientY / window.innerHeight - 0.5) * 2);
         });
     </script>
+    <div id="custom-modal" class="modal-overlay hidden">
+    <div class="glass-panel modal-box">
+        <p id="modal-text">Точно удалить эту оценку?</p>
+        <div class="modal-actions">
+            <button id="modal-confirm" class="btn-primary">УДАЛИТЬ</button>
+            <button id="modal-cancel" class="btn-secondary">ОТМЕНА</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
