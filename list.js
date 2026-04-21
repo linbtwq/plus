@@ -86,8 +86,10 @@ function render(moviesToRender) {
         else if (m.score < 85) colorClass = 'color-lime';
         else colorClass = 'color-green';
         
+        const isPlatinum = m.score === 100 ? ' platinum-card' : '';
+        
         const card = document.createElement('div');
-        card.className = 'movie-card';
+        card.className = `movie-card${isPlatinum}`;
         
         const posterImg = m.poster ? `<img src="${m.poster}" class="card-poster">` : `<div class="card-poster no-img">БЕЗ ОБЛОЖКИ</div>`;
 
