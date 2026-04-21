@@ -226,7 +226,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
         if (!dropdown.contains(e.target)) { dropdown.classList.remove('open'); }
     });
-
+    
+document.querySelectorAll('.type-tab').forEach(tab => {
+    tab.addEventListener('click', (e) => {
+        document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
+        e.target.classList.add('active');
+        applyFiltersAndSort();
+    });
+});
     options.forEach(option => {
         option.addEventListener('click', () => {
             options.forEach(opt => opt.classList.remove('active'));
