@@ -21,19 +21,23 @@
             </div>
             
             <div id="movie-preview" class="movie-preview hidden">
-    <img id="preview-poster" src="" alt="Постер" class="preview-poster">
-    <div class="preview-info">
-        <div id="preview-title" class="preview-title">Название</div>
-        <div id="preview-genres" class="preview-genres">Жанры</div>
-        
-        <select id="media-type" class="custom-select">
-            <option value="movie">ФИЛЬМ</option>
-            <option value="anime">АНИМЕ</option>
-            <option value="series">СЕРИАЛ</option>
-        </select>
-    </div>
-    <button id="clear-preview" class="clear-btn" title="Выбрать другой фильм">✕</button>
-</div>
+                <img id="preview-poster" src="" alt="Постер" class="preview-poster">
+                <div class="preview-info">
+                    <div id="preview-title" class="preview-title">Название</div>
+                    <div id="preview-genres" class="preview-genres">Жанры</div>
+                    
+                    <div class="custom-dropdown" id="media-type-dropdown" style="width: 100%; margin-top: 10px; z-index: 50;">
+                        <div class="dropdown-selected" id="media-type-selected" data-value="movie" style="padding: 10px 15px; font-size: 0.75rem; background: rgba(0,0,0,0.6); border-radius: 8px;">🎬 ФИЛЬМ <span class="arrow">▼</span></div>
+                        <div class="dropdown-options" id="media-type-options" style="top: 100%; margin-top: 5px; width: 100%;">
+                            <div class="dropdown-item active" data-value="movie">ФИЛЬМ</div>
+                            <div class="dropdown-item" data-value="anime">АНИМЕ</div>
+                            <div class="dropdown-item" data-value="series">СЕРИАЛ</div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <button id="clear-preview" class="clear-btn" title="Выбрать другой фильм">✕</button>
+            </div>
             
             <div class="dashboard-grid">
                 <div class="section-box">
@@ -51,8 +55,6 @@
                     <div style="text-align: center; margin-top: 20px;">
                         <div class="section-title">ИТОГ</div>
                         <div id="final-score" class="score-display">71</div>
-                        <div style="margin-top: 20px;">
-                    </div>
                         <button id="save-btn" class="btn-primary">СОХРАНИТЬ</button>
                     </div>
                 </div>
