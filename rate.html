@@ -21,13 +21,19 @@
             </div>
             
             <div id="movie-preview" class="movie-preview hidden">
-                <img id="preview-poster" src="" alt="Постер" class="preview-poster">
-                <div class="preview-info">
-                    <div id="preview-title" class="preview-title">Название</div>
-                    <div id="preview-genres" class="preview-genres">Жанры</div>
-                </div>
-                <button id="clear-preview" class="clear-btn" title="Выбрать другой фильм">✕</button>
-            </div>
+    <img id="preview-poster" src="" alt="Постер" class="preview-poster">
+    <div class="preview-info">
+        <div id="preview-title" class="preview-title">Название</div>
+        <div id="preview-genres" class="preview-genres">Жанры</div>
+        
+        <select id="media-type" class="custom-select">
+            <option value="movie">ФИЛЬМ</option>
+            <option value="anime">АНИМЕ</option>
+            <option value="series">СЕРИАЛ</option>
+        </select>
+    </div>
+    <button id="clear-preview" class="clear-btn" title="Выбрать другой фильм">✕</button>
+</div>
             
             <div class="dashboard-grid">
                 <div class="section-box">
@@ -46,11 +52,6 @@
                         <div class="section-title">ИТОГ</div>
                         <div id="final-score" class="score-display">71</div>
                         <div style="margin-top: 20px;">
-                        <select id="media-type" class="title-input" style="padding: 15px; font-size: 0.8rem; cursor: pointer;">
-                        <option value="movie"> ФИЛЬМ</option>
-                        <option value="anime"> АНИМЕ</option>
-                        <option value="series"> СЕРИАЛ</option>
-                        </select>
                     </div>
                         <button id="save-btn" class="btn-primary">СОХРАНИТЬ</button>
                     </div>
