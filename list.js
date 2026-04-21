@@ -184,14 +184,20 @@ function renderGenres(movies) {
 }
 function applyFiltersAndSort() {
     let currentMovies = [...loadedMovies];
-    
+    const activeTypeBtn = document.querySelector('.type-tab.active');
+    if (activeTypeBtn && activeTypeBtn.dataset.type !== 'all') {
+        const selectedType = activeTypeBtn.dataset.type;
+        currentMovies = currentMovies.filter(m => (m.type || 'movie') === selectedType);
+    }
+
     const activeGenreBtn = document.querySelector('.genre-pill.active');
-    if(activeGenreBtn && activeGenreBtn.dataset.genre !== 'all') {
+    if (activeGenreBtn && activeGenreBtn.dataset.genre !== 'all') {
         const selectedGenre = activeGenreBtn.dataset.genre;
         currentMovies = currentMovies.filter(m => m.genres && m.genres.includes(selectedGenre));
     }
+
     const activeSort = document.querySelector('.dropdown-item.active');
-    if(activeSort) {
+    if (activeSort) {
         const sortType = activeSort.getAttribute('data-value');
         if (sortType === 'high') currentMovies.sort((a, b) => b.score - a.score);
         else if (sortType === 'low') currentMovies.sort((a, b) => a.score - b.score);
@@ -200,6 +206,11 @@ function applyFiltersAndSort() {
             const timeB = b.timestamp ? b.timestamp.seconds : 0;
             return timeB - timeA;
         });
+    }
+    const searchEl = document.getElementById('local-search');
+    if (searchEl && searchEl.value) {
+        const searchTerm = searchEl.value.toLowerCase();
+        currentMovies = currentMovies.filter(m => m.title.toLowerCase().includes(searchTerm));
     }
     
     render(currentMovies);
