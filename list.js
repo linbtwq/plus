@@ -27,10 +27,12 @@ async function fetchMovies() {
     try {
         const q = query(collection(db, "movies"), orderBy("timestamp", "desc"));
         const snap = await getDocs(q);
+        
         loadedMovies = [];
         snap.forEach(d => loadedMovies.push({ id: d.id, ...d.data() }));
         
         updateStats(loadedMovies);
+        renderGenres(loadedMovies);
         render(loadedMovies);
     } catch (e) { 
         console.error("Ошибка:", e);
