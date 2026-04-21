@@ -6,7 +6,6 @@ let currentScore = 0;
 let selectedPoster = ''; 
 let selectedGenres = ''; 
 
-// жанры TMDB
 const GENRE_MAP = {
     28: "Боевик", 12: "Приключения", 16: "Мультфильм", 35: "Комедия", 80: "Криминал",
     99: "Документальный", 18: "Драма", 10751: "Семейный", 14: "Фэнтези", 36: "История",
@@ -28,6 +27,28 @@ const previewPoster = document.getElementById('preview-poster');
 const previewTitle = document.getElementById('preview-title');
 const previewGenres = document.getElementById('preview-genres');
 const clearBtn = document.getElementById('clear-preview');
+
+const typeDropdown = document.getElementById('media-type-dropdown');
+const typeSelected = document.getElementById('media-type-selected');
+const typeOptions = document.querySelectorAll('#media-type-options .dropdown-item');
+
+if (typeSelected && typeDropdown) {
+    typeSelected.addEventListener('click', () => typeDropdown.classList.toggle('open'));
+    document.addEventListener('click', (e) => {
+        if (!typeDropdown.contains(e.target)) typeDropdown.classList.remove('open');
+    });
+    typeOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            typeOptions.forEach(opt => opt.classList.remove('active'));
+            option.classList.add('active');
+            const val = option.getAttribute('data-value');
+            const text = option.innerText;
+            typeSelected.innerHTML = `${text} <span class="arrow">▼</span>`;
+            typeSelected.setAttribute('data-value', val);
+            typeDropdown.classList.remove('open');
+        });
+    });
+}
 
 let searchTimer;
 titleInput.addEventListener('input', (e) => {
@@ -72,14 +93,13 @@ function showSuggestions(movies) {
             previewGenres.textContent = selectedGenres || 'Жанр не указан';
             
             previewBox.classList.remove('hidden');
-            searchWrapper.style.display = 'none'; // прячем инпут
+            searchWrapper.style.display = 'none';
             suggestionsBox.style.display = 'none';
         });
         suggestionsBox.appendChild(div);
     });
 }
 
-// кнопка сброса возвращает инпут в начальное состояние и скрывает предпросмотр
 clearBtn.addEventListener('click', () => {
     titleInput.value = '';
     selectedPoster = '';
@@ -110,16 +130,16 @@ function calculate() {
 
     let rawScore = base + vibe;
     currentScore = Math.round(((rawScore - 15) / 85) * 100);
+    if (currentScore < 0) currentScore = 0;
     scoreDisplay.textContent = currentScore;
     
-    let colorClass = '';
-    if (currentScore < 40) colorClass = 'color-red';
-    else if (currentScore < 55) colorClass = 'color-orange';
-    else if (currentScore < 70) colorClass = 'color-yellow';
-    else if (currentScore < 85) colorClass = 'color-lime';
-    else colorClass = 'color-green';
+    scoreDisplay.classList.remove('color-red', 'color-orange', 'color-yellow', 'color-lime', 'color-green');
     
-    scoreDisplay.className = `score-display ${colorClass}`;
+    if (currentScore < 40) scoreDisplay.classList.add('color-red');
+    else if (currentScore < 55) scoreDisplay.classList.add('color-orange');
+    else if (currentScore < 70) scoreDisplay.classList.add('color-yellow');
+    else if (currentScore < 85) scoreDisplay.classList.add('color-lime');
+    else scoreDisplay.classList.add('color-green');
 }
 
 document.querySelectorAll('input[type="range"]').forEach(i => i.addEventListener('input', calculate));
@@ -133,7 +153,7 @@ document.getElementById('save-btn').onclick = async () => {
         await addDoc(collection(db, "movies"), {
             title,
             genres: selectedGenres,
-            type: document.getElementById('media-type').value,
+            type: document.getElementById('media-type-selected').getAttribute('data-value'),
             score: currentScore,
             poster: selectedPoster,
             authorName: currentUser.displayName,
