@@ -133,6 +133,7 @@ document.getElementById('save-btn').onclick = async () => {
         await addDoc(collection(db, "movies"), {
             title,
             genres: selectedGenres,
+            type: document.getElementById('media-type').value,
             score: currentScore,
             poster: selectedPoster,
             authorName: currentUser.displayName,
