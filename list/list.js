@@ -1,4 +1,4 @@
-import { auth, db, collection, getDocs, query, orderBy, onAuthStateChanged, deleteDoc, doc } from './firebase-init.js';
+import { auth, db, collection, getDocs, query, orderBy, onAuthStateChanged, deleteDoc, doc } from '/firebase-init.js';
 
 let currentUser = null;
 let loadedMovies = [];
