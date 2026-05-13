@@ -1,4 +1,4 @@
-import { auth, db, collection, addDoc, serverTimestamp, onAuthStateChanged } from '/firebase-init.js';
+import { auth, db, collection, addDoc, serverTimestamp, onAuthStateChanged } from '../firebase-init.js';
 
 const TMDB_API_KEY = '4ff5ea09116c72aed9a95dd1b65183c4';
 let currentUser = null;
