@@ -1,3 +1,12 @@
+/* ==========================================
+   ИДЕАЛЬНЫЙ МОНОЛИТНЫЙ ДИЗАЙН КАЗИНО 🎰💕
+   ========================================== */
+
+html, body {
+    background-color: #fdf5f7 !important;
+}
+
+/* --- ГЛАВНАЯ ДОСКА --- */
 .casino-master-board {
     max-width: 800px !important;
     width: 100%;
@@ -5,6 +14,14 @@
     border-radius: 24px;
     border: 3px solid #fff;
     background: rgba(255, 255, 255, 0.75);
+    
+    /* Анимация появления */
+    animation: popUpBoard 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes popUpBoard {
+    0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .casino-split {
@@ -13,13 +30,23 @@
     align-items: stretch;
 }
 
+/* --- ЛЕВАЯ ЧАСТЬ (АВТОМАТ) --- */
 .casino-left {
     flex: 1.5;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    
+    /* Анимация появления с задержкой 0.2с */
+    animation: slideInSideLeft 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s both;
 }
 
+@keyframes slideInSideLeft {
+    0% { opacity: 0; transform: translateX(-30px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Сам экран рулетки */
 .slot-window {
     position: relative;
     width: 100%;
@@ -28,7 +55,14 @@
     border: 4px solid var(--border-light);
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: inset 0 8px 20px rgba(0,0,0,0.05);
+    
+    /* Пульсация + базовая тень */
+    animation: idlePulse 3s infinite ease-in-out alternate;
+}
+
+@keyframes idlePulse {
+    0% { box-shadow: inset 0 8px 20px rgba(0,0,0,0.05), 0 0 0 rgba(255, 77, 148, 0); }
+    100% { box-shadow: inset 0 8px 20px rgba(0,0,0,0.05), 0 5px 25px rgba(255, 77, 148, 0.2); }
 }
 
 .slot-overlay {
@@ -58,7 +92,7 @@
 }
 
 .slot-item {
-    height: 60px; /* Строго 60px! */
+    height: 60px;
     display: flex; align-items: center; justify-content: center;
     font-family: 'Unbounded', sans-serif;
     font-weight: 900; font-size: 0.9rem; color: var(--text-main);
@@ -69,6 +103,7 @@
 
 .blur-effect { filter: blur(2px) opacity(0.8); }
 
+/* --- ПРАВАЯ ЧАСТЬ (СПИСОК) --- */
 .casino-right {
     flex: 1;
     display: flex;
@@ -78,6 +113,14 @@
     border-radius: 16px;
     padding: 20px;
     box-shadow: inset 0 4px 10px rgba(229,138,163,0.05);
+    
+    /* Анимация появления с задержкой 0.3с */
+    animation: slideInSideRight 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both;
+}
+
+@keyframes slideInSideRight {
+    0% { opacity: 0; transform: translateX(30px); }
+    100% { opacity: 1; transform: translateX(0); }
 }
 
 .tiny-subtitle {
@@ -104,22 +147,7 @@ textarea::-webkit-scrollbar { width: 4px; }
 textarea::-webkit-scrollbar-thumb { background: rgba(229, 138, 163, 0.4); border-radius: 10px; }
 textarea::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-.winner-box {
-    transform: scale(1.2); border: 4px solid #ffd700 !important;
-    box-shadow: 0 0 40px rgba(255, 215, 0, 0.4) !important;
-    animation: winPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-@keyframes winPop {
-    0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
-    100% { transform: scale(1.1) rotate(0deg); opacity: 1; }
-}
-
-@media (max-width: 768px) {
-    .casino-split { flex-direction: column; gap: 20px; }
-    .casino-right { padding: 15px; }
-    textarea { min-height: 150px; }
-}
-
+/* --- ЭЛЕМЕНТЫ УПРАВЛЕНИЯ (РЕЖИМЫ И ПОЛЗУНОК) --- */
 .mode-selector {
     display: flex; gap: 8px; margin-bottom: 20px;
     background: rgba(255,255,255,0.8); padding: 6px;
@@ -142,7 +170,6 @@ textarea::-webkit-scrollbar-thumb:hover { background: var(--accent); }
     transform: scale(1.05);
 }
 
-/* --- ПОЛЗУНОК ВРЕМЕНИ КРУЧЕНИЯ --- */
 .speed-control {
     margin-bottom: 20px;
     background: rgba(255, 255, 255, 0.8);
@@ -154,85 +181,49 @@ textarea::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 }
 
 .speed-control label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    font-family: 'Unbounded', sans-serif;
-    font-size: 0.65rem;
-    font-weight: 700;
-    color: var(--text-muted);
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px; font-family: 'Unbounded', sans-serif;
+    font-size: 0.65rem; font-weight: 700; color: var(--text-muted);
 }
 
 .speed-control .val-display {
-    color: var(--accent);
-    background: #fff;
-    padding: 4px 8px;
-    border-radius: 8px;
+    color: var(--accent); background: #fff;
+    padding: 4px 8px; border-radius: 8px;
     box-shadow: 0 2px 6px rgba(229, 138, 163, 0.15);
 }
 
 #spin-duration {
-    width: 100%;
-    height: 12px;
-    border-radius: 12px;
+    width: 100%; height: 12px; border-radius: 12px;
     -webkit-appearance: none;
     background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
-    outline: none;
-    box-shadow: inset 0 2px 6px rgba(0,0,0,0.08);
+    outline: none; box-shadow: inset 0 2px 6px rgba(0,0,0,0.08);
 }
 
 #spin-duration::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 24px;
-    height: 24px;
-    background: #fff;
-    border: 4px solid var(--accent);
-    border-radius: 50%;
-    cursor: pointer;
+    -webkit-appearance: none; width: 24px; height: 24px;
+    background: #fff; border: 4px solid var(--accent);
+    border-radius: 50%; cursor: pointer;
     box-shadow: 0 4px 10px rgba(229, 138, 163, 0.4);
     transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-#spin-duration::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
+#spin-duration::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+/* --- МОДАЛКА ПОБЕДИТЕЛЯ --- */
+.winner-box {
+    transform: scale(1.2); border: 4px solid #ffd700 !important;
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.4) !important;
+    animation: winPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-html, body {
-    background-color: #fdf5f7 !important;
+@keyframes winPop {
+    0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+    100% { transform: scale(1.1) rotate(0deg); opacity: 1; }
 }
 
-.casino-master-board {
-    opacity: 0;
-    transform: translateY(40px) scale(0.95);
-    animation: popUpBoard 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-.casino-left {
-    opacity: 0;
-    transform: translateX(-30px);
-    animation: slideInSide 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s forwards;
-}
-
-.casino-right {
-    opacity: 0;
-    transform: translateX(30px);
-    animation: slideInSide 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s forwards;
-}
-
-@keyframes popUpBoard {
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes slideInSide {
-    to { opacity: 1; transform: translateX(0); }
-}
-
-.slot-window {
-    animation: idlePulse 3s infinite ease-in-out alternate;
-}
-
-@keyframes idlePulse {
-    0% { box-shadow: inset 0 8px 20px rgba(0,0,0,0.05), 0 0 0 rgba(255, 77, 148, 0); }
-    100% { box-shadow: inset 0 8px 20px rgba(0,0,0,0.05), 0 5px 25px rgba(255, 77, 148, 0.2); }
+/* --- АДАПТИВНОСТЬ (ВСЕГДА В САМОМ НИЗУ) --- */
+@media (max-width: 768px) {
+    .casino-split { flex-direction: column; gap: 20px; }
+    .casino-right { padding: 15px; }
+    textarea { min-height: 150px; }
 }
