@@ -15,7 +15,7 @@ const GENRE_MAP = {
     10765: "Фантастика/Фэнтези", 10766: "Мыльная опера", 10767: "Ток-шоу", 10768: "Война/Политика"
 };
 
-onAuthStateChanged(auth, (user) => { if (user) currentUser = user; else window.location.href = 'index.html'; });
+onAuthStateChanged(auth, (user) => { if (user) currentUser = user; else window.location.href = '../index.html'; });
 
 const searchWrapper = document.getElementById('search-wrapper');
 const titleInput = document.getElementById('movie-title');
