@@ -210,6 +210,6 @@ document.getElementById('save-btn').onclick = async () => {
             date: new Date().toLocaleDateString('ru-RU'),
             stats: finalStats
         });
-        window.location.href = 'list.html';
+        window.location.href = '../list/list.html';
     } catch (e) { console.error(e); alert("Ошибка Firebase"); }
 };
