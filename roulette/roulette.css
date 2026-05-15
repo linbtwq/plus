@@ -114,7 +114,7 @@ html, body {
 textarea {
     width: 100%;
     flex: 1;
-    min-height: 200px;
+    min-height: 450px;
     background: transparent;
     border: none;
     font-family: 'Montserrat', sans-serif;
