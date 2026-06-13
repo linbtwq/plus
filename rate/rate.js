@@ -126,35 +126,38 @@ document.addEventListener('click', (e) => {
     if (!e.target.closest('.search-wrapper')) suggestionsBox.style.display = 'none';
 });
 
-const getRounded = (id) => Math.round(parseFloat(document.getElementById(id).value));
+const getVal = (id) => parseFloat(document.getElementById(id).value);
 
 function getScore(playerSuffix) {
     let base = 0;
     ['script', 'actors', 'directing', 'chars', 'idea'].forEach(id => {
-        const val = getRounded(`${id}-${playerSuffix}`);
-        document.getElementById(`val-${id}-${playerSuffix}`).textContent = val;
+        const val = getVal(`${id}-${playerSuffix}`);
+        document.getElementById(`val-${id}-${playerSuffix}`).textContent = val.toFixed(1);
         base += val;
     });
 
     let vibe = 0;
     ['atmosphere', 'impression'].forEach(id => {
-        const val = getRounded(`${id}-${playerSuffix}`);
-        document.getElementById(`val-${id}-${playerSuffix}`).textContent = val;
-        vibe += (val * 5);
+        const val = getVal(`${id}-${playerSuffix}`);
+        document.getElementById(`val-${id}-${playerSuffix}`).textContent = val.toFixed(1);
+        vibe += val;
     });
 
-    let rawScore = base + vibe;
-    let score = Math.round(((rawScore - 15) / 85) * 100);
-    return score < 0 ? 0 : score;
+    return (base + vibe) / 6;
 }
 
 function calculate() {
     const score1 = getScore('1');
-    let finalScore = score1;
+    let rawFinalScore = score1;
 
     if (duoCheckbox.checked) {
         const score2 = getScore('2');
-        finalScore = Math.round((score1 + score2) / 2);
+        rawFinalScore = (score1 + score2) / 2;
+    }
+
+    let finalScore = Math.round(rawFinalScore * 10) / 10;
+    if (finalScore === 10 && rawFinalScore < 10) {
+        finalScore = 9.9;
     }
 
     if (currentScore !== finalScore) {
@@ -164,15 +167,15 @@ function calculate() {
     }
 
     currentScore = finalScore;
-    scoreDisplay.textContent = currentScore;
+    scoreDisplay.textContent = currentScore.toFixed(1);
     
     scoreDisplay.classList.remove('color-red', 'color-orange', 'color-yellow', 'color-lime', 'color-green', 'color-gold');
     
-    if (currentScore < 40) scoreDisplay.classList.add('color-red');
-    else if (currentScore < 55) scoreDisplay.classList.add('color-orange');
-    else if (currentScore < 70) scoreDisplay.classList.add('color-yellow');
-    else if (currentScore < 85) scoreDisplay.classList.add('color-lime');
-    else if (currentScore < 100) scoreDisplay.classList.add('color-green');
+    if (currentScore < 4.0) scoreDisplay.classList.add('color-red');
+    else if (currentScore < 5.5) scoreDisplay.classList.add('color-orange');
+    else if (currentScore < 7.0) scoreDisplay.classList.add('color-yellow');
+    else if (currentScore < 8.5) scoreDisplay.classList.add('color-lime');
+    else if (currentScore < 10.0) scoreDisplay.classList.add('color-green');
     else scoreDisplay.classList.add('color-gold');
 }
 
@@ -186,13 +189,13 @@ document.getElementById('save-btn').onclick = async () => {
     const isDuo = duoCheckbox.checked;
 
     const finalStats = {
-        script: isDuo ? `${getRounded('script-1')}/${getRounded('script-2')}` : getRounded('script-1'),
-        actors: isDuo ? `${getRounded('actors-1')}/${getRounded('actors-2')}` : getRounded('actors-1'),
-        directing: isDuo ? `${getRounded('directing-1')}/${getRounded('directing-2')}` : getRounded('directing-1'),
-        chars: isDuo ? `${getRounded('chars-1')}/${getRounded('chars-2')}` : getRounded('chars-1'),
-        idea: isDuo ? `${getRounded('idea-1')}/${getRounded('idea-2')}` : getRounded('idea-1'),
-        atmosphere: isDuo ? `${getRounded('atmosphere-1')}/${getRounded('atmosphere-2')}` : getRounded('atmosphere-1'),
-        impression: isDuo ? `${getRounded('impression-1')}/${getRounded('impression-2')}` : getRounded('impression-1')
+        script: isDuo ? `${getVal('script-1').toFixed(1)}/${getVal('script-2').toFixed(1)}` : getVal('script-1').toFixed(1),
+        actors: isDuo ? `${getVal('actors-1').toFixed(1)}/${getVal('actors-2').toFixed(1)}` : getVal('actors-1').toFixed(1),
+        directing: isDuo ? `${getVal('directing-1').toFixed(1)}/${getVal('directing-2').toFixed(1)}` : getVal('directing-1').toFixed(1),
+        chars: isDuo ? `${getVal('chars-1').toFixed(1)}/${getVal('chars-2').toFixed(1)}` : getVal('chars-1').toFixed(1),
+        idea: isDuo ? `${getVal('idea-1').toFixed(1)}/${getVal('idea-2').toFixed(1)}` : getVal('idea-1').toFixed(1),
+        atmosphere: isDuo ? `${getVal('atmosphere-1').toFixed(1)}/${getVal('atmosphere-2').toFixed(1)}` : getVal('atmosphere-1').toFixed(1),
+        impression: isDuo ? `${getVal('impression-1').toFixed(1)}/${getVal('impression-2').toFixed(1)}` : getVal('impression-1').toFixed(1)
     };
 
     try {
