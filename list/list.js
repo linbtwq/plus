@@ -1,4 +1,4 @@
-import { auth, db, collection, getDocs, query, orderBy, onAuthStateChanged, deleteDoc, doc } from '../firebase-init.js';
+import { auth, db, collection, getDocs, query, orderBy, onAuthStateChanged, deleteDoc, doc, updateDoc } from '../firebase-init.js';
 
 let currentUser = null;
 let loadedMovies = [];
@@ -20,6 +20,31 @@ onAuthStateChanged(auth, (user) => {
     else { window.location.href = 'index.html'; }
 });
 
+function recoverOriginalScore(stats, isDuo) {
+    if (!stats) return 0;
+    function getP(val, idx) {
+        if (!val) return 0;
+        let s = String(val);
+        if (s.includes('/')) return parseFloat(s.split('/')[idx]) || 0;
+        return parseFloat(s) || 0;
+    }
+    function calcForPlayer(idx) {
+        let base = 0;
+        ['script', 'actors', 'directing', 'chars', 'idea'].forEach(k => { base += getP(stats[k], idx); });
+        let vibe = 0;
+        ['atmosphere', 'impression'].forEach(k => { vibe += getP(stats[k], idx) * 5; });
+        let raw = base + vibe;
+        let sc = Math.round(((raw - 15) / 85) * 100);
+        return sc < 0 ? 0 : sc;
+    }
+    let s1 = calcForPlayer(0);
+    if (isDuo) {
+        let s2 = calcForPlayer(1);
+        return Math.round((s1 + s2) / 2);
+    }
+    return s1;
+}
+
 async function fetchMovies() {
     const grid = document.getElementById('movies-grid');
     grid.innerHTML = '<p style="text-align: center; width: 100%; grid-column: 1/-1; font-family: \'Unbounded\'; color: #888;">ЗАГРУЗКА БАЗЫ ДАННЫХ...</p>';
@@ -29,7 +54,27 @@ async function fetchMovies() {
         const snap = await getDocs(q);
         
         loadedMovies = [];
-        snap.forEach(d => loadedMovies.push({ id: d.id, ...d.data() }));
+        snap.forEach(d => {
+            let data = d.data();
+            let finalScore = data.score;
+
+            let isOldMovie = data.stats && data.stats.script && !String(data.stats.script).includes('.');
+
+            if (isOldMovie && !data.isPerfectlyRestored) {
+                let original100Score = recoverOriginalScore(data.stats, data.isDuo);
+                
+                finalScore = parseFloat((original100Score / 10).toFixed(1));
+                
+                updateDoc(doc(db, "movies", d.id), { 
+                    score: finalScore, 
+                    isPerfectlyRestored: true,
+                    isFixed: true 
+                });
+            }
+
+            data.score = finalScore;
+            loadedMovies.push({ id: d.id, ...data });
+        });
         
         updateStats(loadedMovies);
         renderGenres(loadedMovies);
@@ -43,7 +88,8 @@ async function fetchMovies() {
 function updateStats(movies) {
     const totalEl = document.getElementById('total-movies');
     const avgEl = document.getElementById('average-score');
-    if(!totalEl || !avgEl) return;
+    
+    if (!totalEl || !avgEl) return;
 
     totalEl.innerText = movies.length;
     
@@ -54,14 +100,15 @@ function updateStats(movies) {
     }
     
     const totalScore = movies.reduce((sum, movie) => sum + movie.score, 0);
-    const avg = Math.round(totalScore / movies.length);
-    avgEl.innerText = avg;
+    const avg = totalScore / movies.length;
+    
+    avgEl.innerText = avg.toFixed(1);
     
     let colorClass = '';
-    if (avg < 40) colorClass = 'color-red';
-    else if (avg < 55) colorClass = 'color-orange';
-    else if (avg < 70) colorClass = 'color-yellow';
-    else if (avg < 85) colorClass = 'color-lime';
+    if (avg < 4.0) colorClass = 'color-red';
+    else if (avg < 5.5) colorClass = 'color-orange';
+    else if (avg < 7.0) colorClass = 'color-yellow';
+    else if (avg < 8.5) colorClass = 'color-lime';
     else colorClass = 'color-green';
     
     avgEl.className = colorClass;
@@ -80,15 +127,18 @@ function render(moviesToRender) {
         const isOwner = currentUser && m.userId === currentUser.uid;
         
         let colorClass = '';
-        if (m.score < 40) colorClass = 'color-red';
-        else if (m.score < 55) colorClass = 'color-orange';
-        else if (m.score < 70) colorClass = 'color-yellow';
-        else if (m.score < 85) colorClass = 'color-lime';
+        if (m.score < 4.0) colorClass = 'color-red';
+        else if (m.score < 5.5) colorClass = 'color-orange';
+        else if (m.score < 7.0) colorClass = 'color-yellow';
+        else if (m.score < 8.5) colorClass = 'color-lime';
         else colorClass = 'color-green';
         
-        const isPlatinum = m.score === 100 ? ' platinum-card' : '';
+        const isPlatinum = m.score === 10 ? ' platinum-card' : '';
+        
+        const displayScore = Number.isInteger(m.score) ? m.score.toFixed(1) : m.score;
+        
         const posterImg = m.poster ? `<img src="${m.poster}" class="card-poster">` : `<div class="card-poster no-img">БЕЗ ОБЛОЖКИ</div>`;
-            const titleExtra = m.isDuo ? ' <span title="Смотрели вместе 🐰💕" style="font-size: 1.1rem;">💕</span>' : '';
+        const titleExtra = m.isDuo ? ' <span title="Смотрели вместе 🐰💕" style="font-size: 1.1rem;">💕</span>' : '';
 
         const card = document.createElement('div');
         card.className = `movie-card${isPlatinum}`;
@@ -109,7 +159,7 @@ function render(moviesToRender) {
                 <div class="movie-genres">${m.genres || ''}</div>
                 
                 <div class="movie-score-wrapper">
-                    <div class="movie-score ${colorClass}">${m.score}</div>
+                    <div class="movie-score ${colorClass}">${displayScore}</div>
                     <div class="stats-tooltip">
                         <div class="stat-row"><span>Сценарий</span><span class="stat-val">${m.stats?.script || '?'}</span></div>
                         <div class="stat-row"><span>Актеры</span><span class="stat-val">${m.stats?.actors || '?'}</span></div>
@@ -117,7 +167,7 @@ function render(moviesToRender) {
                         <div class="stat-row"><span>Персонажи</span><span class="stat-val">${m.stats?.chars || '?'}</span></div>
                         <div class="stat-row"><span>Идея</span><span class="stat-val">${m.stats?.idea || '?'}</span></div>
                         <div style="height: 1px; background: rgba(229, 138, 163, 0.2); margin: 8px 0;"></div>
-                        <div class="stat-row"><span>Вайб</span><span class="stat-val">${m.stats?.atmosphere || '?'}</span></div>
+                        <div class="stat-row"><span>Атмосфера</span><span class="stat-val">${m.stats?.atmosphere || '?'}</span></div>
                         <div class="stat-row"><span>Впечатление</span><span class="stat-val">${m.stats?.impression || '?'}</span></div>
                     </div>
                 </div>
